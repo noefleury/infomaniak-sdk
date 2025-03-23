@@ -1,0 +1,21 @@
+{
+  "name": "noefleury/infomaniak-sdk",
+  "description": "Infomaniak API unofficial SDK",
+  "keywords": ["infomaniak", "sdk"],
+  "type": "library",
+  "minimum-stability": "stable",
+  "license": "GPL-3.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "NoeFleury\\InfomaniakSdk\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Noé Fleury",
+      "email": "code@noefleury.ch"
+    }
+  ],
+  "require": {
+  }
+}
