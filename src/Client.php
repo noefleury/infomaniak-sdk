@@ -7,8 +7,9 @@ use NoeFleury\InfomaniakSdk\HttpHandler\CurlHttpHandler;
 class Client extends CurlHttpHandler
 {
 
+    public const string ENDPOINT = 'https://api.infomaniak.com';
+
     protected ?string $bearer = null;
-    public const ENDPOINT = 'https://api.infomaniak.com';
 
     public function __construct(?string $bearerToken = null)
     {
