@@ -3,6 +3,7 @@
 namespace NoeFleury\InfomaniakSdk\Object;
 
 use NoeFleury\InfomaniakSdk\Client;
+use NoeFleury\InfomaniakSdk\Enum\RequestBuilder\OrderDirection;
 use NoeFleury\InfomaniakSdk\Exception\InvalidRequestVerb;
 use NoeFleury\InfomaniakSdk\HttpHandler\CurlHttpHandler;
 use NoeFleury\InfomaniakSdk\HttpHandler\HttpHandlerInterface;
@@ -11,6 +12,8 @@ class RequestBuilder
 {
 
     protected array $with = [];
+    protected string $orderBy;
+    protected OrderDirection $orderDirection;
 
     protected HttpHandlerInterface $handler;
 
@@ -28,6 +31,33 @@ class RequestBuilder
         if (!in_array($attribute, $this->with)) {
             $this->with[] = $attribute;
         }
+        return $this;
+    }
+
+    public function orderBy(string $attribute, ?OrderDirection $direction = OrderDirection::Ascendant): self
+    {
+        $this->orderBy = $attribute;
+        if (!is_null($direction)) {
+            $this->orderDirection($direction);
+        }
+        return $this;
+    }
+
+    public function orderDirection(OrderDirection $direction): self
+    {
+        $this->orderDirection = $direction;
+        return $this;
+    }
+
+    public function ascendant(): self
+    {
+        $this->orderDirection(OrderDirection::Ascendant);
+        return $this;
+    }
+
+    public function descendant(): self
+    {
+        $this->orderDirection(OrderDirection::Descendant);
         return $this;
     }
 
@@ -53,6 +83,12 @@ class RequestBuilder
     {
         if (!empty($this->with)) {
             $this->payload['with'] = implode(',', $this->with);
+        }
+        if (!empty($this->orderBy)) {
+            $this->payload['order_by'] = $this->orderBy;
+            if (!empty($this->orderDirection)) {
+                $this->payload['order'] = $this->orderDirection->value;
+            }
         }
     }
 
