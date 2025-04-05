@@ -10,6 +10,11 @@
       "NoeFleury\\InfomaniakSdk\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "NoeFleury\\InfomaniakSdk\\Tests\\": "tests/"
+    }
+  },
   "authors": [
     {
       "name": "Noé Fleury",
@@ -19,6 +24,12 @@
   "require": {
     "php": "^8.3",
     "ext-curl": "*",
-    "ext-json": "*",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^12"
+  },
+  "scripts": {
+    "test": "phpunit"
   }
 }
