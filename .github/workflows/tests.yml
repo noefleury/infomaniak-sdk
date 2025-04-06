@@ -1,0 +1,36 @@
+name: tests
+
+on:
+  push
+
+jobs:
+
+  tests:
+
+    strategy:
+
+      fail-fast: false
+
+      matrix:
+
+        os:
+          - "ubuntu-latest"
+          - "windows-latest"
+
+        php_version:
+          - "8.3"
+          - "8.4"
+
+    runs-on: ${{matrix.os}}
+
+    name: Testing on PHP ${{ matrix.php }} running on ${{matrix.os}}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: php-actions/composer@v6
+        with:
+          php_version: ${{php_version}}
+      - uses: php-actions/phpunit@v4
+        with:
+          php_version: ${{php_version}}
+          php_extensions: curl json
