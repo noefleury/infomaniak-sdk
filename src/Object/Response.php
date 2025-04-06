@@ -19,35 +19,51 @@ class Response
     protected const string ERROR_OBJECT_NOT_FOUND = 'object_not_found';
     protected const string ERROR_VALIDATION_FAILED = 'validation_failed';
 
-    protected array|string $data;
+    protected array|string|int $data;
 
+    /**
+     * @throws HttpException
+     * @throws InvalidResponse
+     * @throws UnexpectedResponse
+     */
     public function __construct(string $rawData, int $httpCode)
     {
-        return $this->handleResponse($rawData, $httpCode);
+        $this->handleResponse($rawData, $httpCode);
     }
 
-    public function data()
+    public function data(): array|int|string
     {
         return $this->data;
     }
 
-    protected function handleResponse(string $rawData, int $httpCode)
+    /**
+     * Handle the response
+     *
+     * @throws InvalidResponse
+     * @throws HttpException
+     * @throws UnexpectedResponse
+     */
+    protected function handleResponse(string $rawData, int $httpCode): void
     {
-        throw_if(empty($rawData), UnexpectedResponse::class);
+        if (empty($rawData)) {
+            throw new UnexpectedResponse();
+        }
 
         try {
             $response = json_decode($rawData, true);
-            switch ($response['result']) {
+            switch (@$response['result']) {
                 case self::RESULT_ON_SUCCESS:
                     $this->data = $response['data'];
                     break;
                 case self::RESULT_ON_ERROR:
                     $this->handleErrorResponse($response['error'], $httpCode);
-                    break;
+                case null:
+                default:
+                    throw new InvalidResponse();
             }
         } catch (HttpException $httpException) {
             throw $httpException;
-        } catch (\Throwable $throwable) {
+        } catch (\Throwable) {
             throw new InvalidResponse();
         }
     }
@@ -58,11 +74,11 @@ class Response
      * @param  array  $error
      * @param  int  $httpCode
      *
-     * @return mixed
+     * @return void
      *
      * @throws HttpException
      */
-    protected function handleErrorResponse(array $error, int $httpCode)
+    protected function handleErrorResponse(array $error, int $httpCode): void
     {
         /** @var HttpException $httpExceptionClass */
         $httpExceptionClass = match ($error['code']) {
