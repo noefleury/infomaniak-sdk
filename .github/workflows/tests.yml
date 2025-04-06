@@ -14,16 +14,16 @@ jobs:
       matrix:
 
         os:
-          - "ubuntu-latest"
-          - "windows-latest"
+          - ubuntu-latest
+          - windows-latest
 
         php_version:
-          - "8.3"
-          - "8.4"
+          - 8.3
+          - 8.4
 
     runs-on: ${{ matrix.os }}
 
-    name: Testing on PHP ${{ matrix.php_version }} running on ${{ matrix.os }}
+    name: Testing with PHP ${{ matrix.php_version }} running on ${{ matrix.os }}
 
     steps:
 
@@ -34,7 +34,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php_version }}
-          extensions: "curl"
+          extensions: curl json
           tools: composer:v2
 
       - name: Install dependencies
