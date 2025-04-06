@@ -34,7 +34,6 @@ jobs:
         uses: php-actions/composer@v6
         with:
           php_version: ${{ matrix.php_version }}
-          container_workdir: "/src"
 
       - name: Running tests
         uses: php-actions/phpunit@v4
