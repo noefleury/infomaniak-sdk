@@ -39,4 +39,3 @@ jobs:
         uses: php-actions/phpunit@v4
         with:
           php_version: ${{ matrix.php_version }}
-          php_extensions: "curl"
