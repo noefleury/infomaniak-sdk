@@ -30,10 +30,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        uses: php-actions/composer@v6
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          php_version: ${{ matrix.php_version }}
+          php-version: ${{ matrix.php_version }}
+          extensions: "curl"
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install
 
       - name: Running tests
         uses: php-actions/phpunit@v4
