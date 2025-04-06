@@ -1,4 +1,6 @@
 .idea/**
 .phpunit.cache/**
+junit.xml
+coverage.xml
 vendor/**
 composer.lock
