@@ -26,7 +26,8 @@ jobs:
     name: Testing on PHP ${{ matrix.php }} running on ${{matrix.os}}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Install dependencies
         uses: php-actions/composer@v6
         with:
