@@ -21,9 +21,9 @@ jobs:
           - "8.3"
           - "8.4"
 
-    runs-on: ${{matrix.os}}
+    runs-on: ${{ matrix.os }}
 
-    name: Testing on PHP ${{ matrix.php }} running on ${{matrix.os}}
+    name: Testing on PHP ${{ matrix.php_version }} running on ${{ matrix.os }}
 
     steps:
 
@@ -33,10 +33,10 @@ jobs:
       - name: Install dependencies
         uses: php-actions/composer@v6
         with:
-          php_version: ${{php_version}}
+          php_version: ${{ matrix.php_version }}
 
       - name: Running tests
         uses: php-actions/phpunit@v4
         with:
-          php_version: ${{php_version}}
+          php_version: ${{ matrix.php_version }}
           php_extensions: curl json
