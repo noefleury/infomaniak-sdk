@@ -2,6 +2,7 @@
 
 namespace NoeFleury\InfomaniakSdk\Tests\Unit;
 
+use NoeFleury\InfomaniakSdk\Client;
 use NoeFleury\InfomaniakSdk\Enum\RequestBuilder\OrderDirection;
 use NoeFleury\InfomaniakSdk\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -19,6 +20,10 @@ class BasicTest extends TestCase
 
     public function test_thing() {
         $this->assertSame('asc', OrderDirection::Ascendant->value);
+    }
+
+    public function test_another() {
+        $this->assertInstanceOf(Client::class, new Client());
     }
 
 }
