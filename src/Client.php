@@ -2,6 +2,8 @@
 
 namespace NoeFleury\InfomaniakSdk;
 
+use NoeFleury\InfomaniakSdk\Enum\HttpVerb;
+use NoeFleury\InfomaniakSdk\Exception\InvalidRequestVerb;
 use NoeFleury\InfomaniakSdk\Object\RequestBuilder;
 
 /**
@@ -34,12 +36,17 @@ class Client
         return $this->bearer;
     }
 
+    /**
+     * @throws InvalidRequestVerb
+     */
     public function __call(string $verb, array $uriAndParams)
     {
         $verb = strtoupper($verb);
-        if (in_array($verb, ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])) {
-            return new RequestBuilder($this, $verb, ...$uriAndParams);
+        $httpVerb = HttpVerb::tryFrom($verb);
+        if (is_null($httpVerb)) {
+            throw new InvalidRequestVerb("Invalid requested verb: $verb");
         }
+        return new RequestBuilder($this, $httpVerb, ...$uriAndParams);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace NoeFleury\InfomaniakSdk\Object;
 
 use NoeFleury\InfomaniakSdk\Client;
+use NoeFleury\InfomaniakSdk\Enum\HttpVerb;
 use NoeFleury\InfomaniakSdk\Exception\InvalidRequestVerb;
 use NoeFleury\InfomaniakSdk\Helper\RequestBuilderPlugin\SortingPlugin;
 use NoeFleury\InfomaniakSdk\Helper\RequestBuilderPlugin\WithPlugin;
@@ -19,11 +20,10 @@ class RequestBuilder
 
     public function __construct(
         protected Client $client,
-        protected string $method,
+        protected HttpVerb $verb,
         protected string $uri,
         protected ?array $payload = [],
     ) {
-        throw_unless(in_array($this->method, ['GET', 'POST', 'PATCH', 'PUT', 'DELETE']), new InvalidRequestVerb());
     }
 
     /**
@@ -37,7 +37,7 @@ class RequestBuilder
             $this->handler = new CurlHttpHandler($this->client::ENDPOINT, $this->client->getBearer());
         }
         $this->consolidatePayload();
-        return $this->handler->{$this->method}($this->uri, $this->payload);
+        return $this->handler->{$this->verb->value}($this->uri, $this->payload);
     }
 
     /**
