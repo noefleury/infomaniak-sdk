@@ -41,6 +41,4 @@ jobs:
         run: composer install
 
       - name: Running tests
-        uses: php-actions/phpunit@v4
-        with:
-          php_version: ${{ matrix.php_version }}
+        run: composer test
