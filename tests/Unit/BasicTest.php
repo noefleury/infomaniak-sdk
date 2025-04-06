@@ -8,6 +8,7 @@ use NoeFleury\InfomaniakSdk\Tests\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(OrderDirection::class)]
+#[CoversClass(Client::class)]
 class BasicTest extends TestCase
 {
 
