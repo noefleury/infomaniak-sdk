@@ -10,9 +10,7 @@ use NoeFleury\InfomaniakSdk\Exception\InvalidResponse;
 use NoeFleury\InfomaniakSdk\Exception\UnexpectedResponse;
 use NoeFleury\InfomaniakSdk\Object\Response;
 use NoeFleury\InfomaniakSdk\Tests\TestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
 
-#[CoversClass(Response::class)]
 class ResponseTest extends TestCase
 {
 

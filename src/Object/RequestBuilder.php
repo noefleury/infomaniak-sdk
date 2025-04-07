@@ -4,19 +4,15 @@ namespace NoeFleury\InfomaniakSdk\Object;
 
 use NoeFleury\InfomaniakSdk\Client;
 use NoeFleury\InfomaniakSdk\Enum\HttpVerb;
-use NoeFleury\InfomaniakSdk\Exception\InvalidRequestVerb;
+use NoeFleury\InfomaniakSdk\Exception\MissingBearerToken;
 use NoeFleury\InfomaniakSdk\Helper\RequestBuilderPlugin\SortingPlugin;
 use NoeFleury\InfomaniakSdk\Helper\RequestBuilderPlugin\WithPlugin;
-use NoeFleury\InfomaniakSdk\HttpHandler\CurlHttpHandler;
-use NoeFleury\InfomaniakSdk\HttpHandler\HttpHandlerInterface;
 
 class RequestBuilder
 {
 
     use WithPlugin;
     use SortingPlugin;
-
-    protected HttpHandlerInterface $handler;
 
     public function __construct(
         protected Client $client,
@@ -30,14 +26,12 @@ class RequestBuilder
      * Send request
      *
      * @return Response
+     * @throws MissingBearerToken
      */
     public function send(): Response
     {
-        if (empty($this->handler)) {
-            $this->handler = new CurlHttpHandler($this->client::ENDPOINT, $this->client->getBearer());
-        }
         $this->consolidatePayload();
-        return $this->handler->{$this->verb->value}($this->uri, $this->payload);
+        return $this->client->getHandler()->{$this->verb->value}($this->uri, $this->payload);
     }
 
     /**

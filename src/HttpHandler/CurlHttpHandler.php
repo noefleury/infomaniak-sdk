@@ -4,12 +4,8 @@ namespace NoeFleury\InfomaniakSdk\HttpHandler;
 
 use NoeFleury\InfomaniakSdk\Object\Response;
 
-class CurlHttpHandler implements HttpHandlerInterface
+readonly class CurlHttpHandler extends BaseHandler implements HttpHandlerInterface
 {
-
-    public function __construct(private string $apiEndpoint, private string $bearerToken)
-    {
-    }
 
     private function buildCurl(string $uri): \CurlHandle|false
     {
