@@ -5,6 +5,7 @@ namespace NoeFleury\InfomaniakSdk\Object;
 use NoeFleury\InfomaniakSdk\Client;
 use NoeFleury\InfomaniakSdk\Enum\HttpVerb;
 use NoeFleury\InfomaniakSdk\Exception\MissingBearerToken;
+use NoeFleury\InfomaniakSdk\Helper\RequestBuilderPlugin\OffsetPlugin;
 use NoeFleury\InfomaniakSdk\Helper\RequestBuilderPlugin\SortingPlugin;
 use NoeFleury\InfomaniakSdk\Helper\RequestBuilderPlugin\WithPlugin;
 
@@ -13,6 +14,7 @@ class RequestBuilder
 
     use WithPlugin;
     use SortingPlugin;
+    use OffsetPlugin;
 
     public function __construct(
         protected Client $client,
@@ -43,6 +45,7 @@ class RequestBuilder
     {
         $this->handleWithPayload(); // WithPlugin
         $this->handleSortingPayload(); // SortingPlugin
+        $this->handleOffsetPayload(); // OffsetPlugin
     }
 
 }
